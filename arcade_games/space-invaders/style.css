@@ -35,3 +35,14 @@
 .boom {
     background-image: url('./images/boom.png');
 }
+
+button{
+    height:40px;
+    width: 100px;
+    margin-top:  30px;
+    margin-left: -7px;
+}
+.btn-arrows{
+    position: relative; 
+    margin-left: calc(((var(--cell-size) * var(--grid-size) + 4px)/4));
+}

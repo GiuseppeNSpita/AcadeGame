@@ -124,6 +124,31 @@ function moveSpaceship(event) {
     cells[spaceshipIdx].classList.add('spaceship');
 }
 
+function btn_left() {
+    const leftEdge = spaceshipIdx % size === 0;
+    //const rightEdge = spaceshipIdx % size === size - 1;
+
+    cells[spaceshipIdx].classList.remove('spaceship');
+    if(!leftEdge) {
+        // Mi muovo a sinistra
+        spaceshipIdx--;
+    }
+    cells[spaceshipIdx].classList.add('spaceship');
+}
+
+function btn_right() {
+    //const leftEdge = spaceshipIdx % size === 0;
+    const rightEdge = spaceshipIdx % size === size - 1;
+
+    cells[spaceshipIdx].classList.remove('spaceship');
+    if(!rightEdge) {
+        // Mi muovo a destra
+        spaceshipIdx++;
+    }
+    cells[spaceshipIdx].classList.add('spaceship');
+}
+
+
 document.addEventListener('keydown', moveSpaceship);
 
 
@@ -171,5 +196,49 @@ function shoot(event) {
     laserIntVal = setInterval(moveLaser, 200);
 }
 
-document.addEventListener('keydown', shoot);
 
+function btn_shoot() {
+    
+    let laserIdx = spaceshipIdx;
+    let laserIntVal = null;
+    function moveLaser() {
+        cells[laserIdx].classList.remove('laser');
+        laserIdx = laserIdx - size;
+
+        if(laserIdx < 0) {
+            clearInterval(laserIntVal);
+            return;
+        }
+
+        // Check colpito
+        if(cells[laserIdx].classList.contains('alien')) {
+            clearInterval(laserIntVal);
+            cells[laserIdx].classList.remove('alien', 'laser');
+            cells[laserIdx].classList.add('boom');
+            setTimeout(function() {
+                cells[laserIdx].classList.remove('boom');
+            }, 200);
+
+            // Tengo traccia degli alieni uccisi
+            const killed = aliens.indexOf(laserIdx);
+            aliensKilled.push(killed);
+
+            // Incremento Punteggio
+            score++;
+            scoreEl.innerText = score;
+            
+            checkForHumanWin();
+
+            return;
+
+        }
+
+        cells[laserIdx].classList.add('laser');
+    }
+
+    laserIntVal = setInterval(moveLaser, 200);
+}
+document.addEventListener('keydown', shoot);
+document.getElementById('btn_shoot').addEventListener("click", btn_shoot);
+document.getElementById('btn_left').addEventListener("click", btn_left);
+document.getElementById('btn_right').addEventListener("click", btn_right);

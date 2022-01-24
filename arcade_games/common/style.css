@@ -1,22 +1,3 @@
-#container {
-  width: 95%;
-  }
-  header {
-  width: 100%;
-  }
-  #main {
-  width: 100%;
-  }
-  article {
-  width: 100%;
-  }
-  #ricerca input[type=text] {
-  width: 60%;
-  }
-  footer {
-  width: 100%;
-  }
-
 
 :root{
   --bg-color: #1d1de6;
